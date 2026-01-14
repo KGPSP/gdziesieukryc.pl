@@ -52,11 +52,9 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 02.01.2026 - Naprawiono rozwiązywanie asynchronicznej konfiguracji Vite
 
 ### 📝 Dokumentacja
-- 13.01.2026 - Zaktualizowano ustawienia Claude Code z uprawnieniami chrome-devtools
 - 12.01.2026 - Zreorganizowano strukturę dokumentacji i oczyszczono assety
 - 08.01.2026 - Zaktualizowano dokumentację dla integracji GIOŚ
 - 07.01.2026 - Dodano dokumentację błędów dla mapowania województw
-- 06.01.2026 - Zaktualizowano konfigurację Claude i dodano dokumentację
 - 03.01.2026 - Przeniesiono dokumentację testów do katalogu docs
 - 03.01.2026 - Zaktualizowano .gitignore
 
@@ -120,9 +118,7 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 29.12.2025 - Ulepszono obsługę uprawnień GPS dla iOS Safari PWA
 - 29.12.2025 - Dodano ADR-047 dla obsługi wygaśnięcia uprawnień GPS w iOS PWA
 - 29.12.2025 - Ulepszono wiadomości strony offline dla lepszego UX
-- 29.12.2025 - Dodano politykę komentarzy w kodzie do CLAUDE.md
 - 29.12.2025 - Scalono oczyszczanie i usuwanie rozwlekłych komentarzy
-- 29.12.2025 - Usunięto rozwlekłe komentarze w stylu AI z kodu produkcyjnego
 - 28.12.2025 - Zoptymalizowano wyszukiwanie cache w navigation handler
 - 28.12.2025 - Zagwarantowano niestandardową stronę offline zamiast błędu Safari
 - 28.12.2025 - Użyto wzorca fire-and-forget dla cache.put w navigation handler
@@ -308,7 +304,7 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 05.12.2025 - Migrowano pozostałe użycia Z_INDEX do zmiennych CSS
 - 05.12.2025 - Zaimplementowano architekturę CSS Grid Shell dla mobile layout
 - 05.12.2025 - Naprawiono problemy mobile layout - z-index, viewport height, positioning tabbaru
-- 05.12.2025 - Zaktualizowano CLAUDE.md i replit.md z architekturą Konsta UI
+- 05.12.2025 - Zaktualizowano dokumentację z architekturą Konsta UI
 - 05.12.2025 - Poprawki przeglądu kodu dla implementacji Konsta UI
 - 05.12.2025 - Zaimplementowano Konsta UI dla mobile-first native look
 - 05.12.2025 - Dodano plan integracji Konsta UI i dokumentację
@@ -321,7 +317,6 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 02.12.2025 - Ulepszono funkcjonalność offline przez cachowanie danych schronisk i aktualizację UI
 
 ### 🐛 Poprawki błędów
-- 29.12.2025 - Usunięto rozwlekłe komentarze z komponentów GPS i mapy
 - 29.12.2025 - Poprawiono obsługę GPS iOS według przeglądu kodu
 - 29.12.2025 - Ulepszono UX strony offline według przeglądu kodu
 - 28.12.2025 - Usunięto redundantną funkcję findCachedAppShell
@@ -346,7 +341,6 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 ### 📝 Dokumentacja
 - 31.12.2025 - Zaktualizowano datę lastmod w sitemap
 - 30.12.2025 - Zaktualizowano datę lastmod w sitemap.xml
-- 29.12.2025 - Usunięto rozwlekłe komentarze wskazujące na AI z kodu frontend
 - 28.12.2025 - Zaktualizowano datę lastmod sitemap
 - 27.12.2025 - Zaktualizowano dokumentację dla auto-centrowania GPS
 - 25.12.2025 - Zaktualizowano ADR: poprawiono dokumentację priorytetu CDN-Cache-Control
@@ -358,8 +352,6 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 21.12.2025 - Wyrównano tytuł widoku zagnieżdżonego do lewej
 - 20.12.2025 - Dodano ustawienia lokalne i assety screenshotów
 - 15.12.2025 - Przygotowanie do implementacji poradniki CMS
-- 05.12.2025 - Zaktualizowano CLAUDE.md z obecną architekturą
-- 05.12.2025 - Ulepszono CLAUDE.md z komendami testowymi i czystszą strukturą
 - 05.12.2025 - Dodano dokumentację
 - 02.12.2025 - Zaktualizowano
 
@@ -381,7 +373,6 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 05.12.2025 - Migrowano stare wartości Z_INDEX do zmiennych CSS
 
 ### 🔧 Konfiguracja
-- 21.12.2025 - Dodano uprawnienie "gh pr create" do Claude Code
 - 20.12.2025 - Zmieniono grubość zarysu markera 24h (thicker 2px, potem green)
 - 05.12.2025 - Dodano Konsta UI do projektu
 
