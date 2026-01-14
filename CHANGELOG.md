@@ -2,13 +2,27 @@
 
 Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 
-**Aktualna wersja:** 1.3.24
+**Aktualna wersja:** 1.3.48
 
 ---
 
 ## Styczeń 2026
 
+### 🔒 Bezpieczeństwo
+- 14.01.2026 - Dodano rate limiting dla admin endpoints (max 5 req/min) - ochrona przed atakami brute-force
+- 14.01.2026 - Poprawiono type safety w sync-weather.ts - zastąpiono Promise<any> przez Promise<unknown>
+
+### 🐛 Naprawy błędów
+- 14.01.2026 - Naprawiono type casting w monitoringu pogody - dodano timestamp do WeatherMetrics interface
+- 14.01.2026 - Dodano TTL (7 dni) dla emergency cache schronisk - zapobiega pokazywaniu stale danych po długim czasie
+- 14.01.2026 - Poprawiono error handling w useWakeLock - dodano identyfikację błędów DOMException
+- 14.01.2026 - Usunięto TODO comment bez ticket reference z transformers.ts
+
 ### ✨ Nowe funkcje
+- 14.01.2026 - Zwiększono częstotliwość synchronizacji schronisk (codziennie zamiast co tydzień) - nowsze dane będą widoczne następnego dnia
+- 14.01.2026 - Dodano automatyczne odświeżanie cache pogody (co 15 minut dla 20 głównych miast Polski)
+- 14.01.2026 - Dodano endpoint monitoringu aplikacji (GET /api/health) sprawdzający status bazy danych, Redis, pamięci i uptime
+- 14.01.2026 - Dodano endpoint metryk cache (GET /api/admin/cache/metrics) z informacjami o hit rate i wydajności
 - 13.01.2026 - Dodano przyciski kopiowania koordynatów i adresy w szczegółach schroniska
 - 13.01.2026 - Dodano automatyczne łamanie długich tekstów w etykietach szczegółów
 - 13.01.2026 - Dodano warunkowe zachowanie przycisku zgłaszania (mobile vs desktop)
@@ -29,12 +43,12 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 07.01.2026 - Dodano obsługę przypadków brzegowych i testy dla modułu pogodowego
 - 07.01.2026 - Dodano zakładkę pogody do nawigacji
 - 07.01.2026 - Dodano planowanie układu desktop z motywem rządowym
-- 06.01.2026 - Dodano dokumentację dla układu desktop
 - 03.01.2026 - Dodano śledzenie rozmiaru pobierania map offline w czasie rzeczywistym
 - 03.01.2026 - Dodano wizualne wskaźniki postępu dla pobierania offline
 - 02.01.2026 - Dodano wsparcie service workera w trybie deweloperskim
 
 ### 🐛 Poprawki błędów
+- 14.01.2026 - Naprawiono przejścia między zakładkami (dodano brakujący tab 'uwaga' do indeksu)
 - 13.01.2026 - Naprawiono wyświetlanie ostrzeżeń hydrologicznych (desktop)
 - 13.01.2026 - Zmieniono układ etykiet na pionowy w karcie szczegółów
 - 13.01.2026 - Ukryto przycisk przełącznika układu na urządzeniach mobilnych
@@ -51,14 +65,10 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 03.01.2026 - Zapobiegano timeout service workera podczas długich pobierań
 - 02.01.2026 - Naprawiono rozwiązywanie asynchronicznej konfiguracji Vite
 
-### 📝 Dokumentacja
-- 12.01.2026 - Zreorganizowano strukturę dokumentacji i oczyszczono assety
-- 08.01.2026 - Zaktualizowano dokumentację dla integracji GIOŚ
-- 07.01.2026 - Dodano dokumentację błędów dla mapowania województw
-- 03.01.2026 - Przeniesiono dokumentację testów do katalogu docs
-- 03.01.2026 - Zaktualizowano .gitignore
 
 ### ⚡ Wydajność
+- 14.01.2026 - Zoptymalizowano zużycie baterii GPS (adaptive accuracy: niska dokładność podczas chodzenia <1m/s, wysoka podczas jazdy >5m/s)
+- 14.01.2026 - Ulepszono wydajność pobierania danych pogodowych (cache warming w tle dla głównych miast)
 - 13.01.2026 - Zapobiegano niepotrzebnemu przeładowaniu schronisk przy przesuwaniu pinezki lokalizacji
 - 12.01.2026 - Zoptymalizowano układ desktop dla kompleksowego wyświetlania schronisk
 
@@ -101,7 +111,6 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 31.12.2025 - Dodano poprawioną obsługę komentarzy wielolinijkowych w service worker
 - 31.12.2025 - Usunięto pozostałości uszkodzonych komentarzy JSDoc z service workera
 - 30.12.2025 - Naprawiono kąt stożka kierunku w trybie mapy heading-up
-- 30.12.2025 - Dodano dokumentację ADR-049 dla wykrywania pętli aktualizacji PWA
 - 30.12.2025 - Ulepszono niezawodność mechanizmu aktualizacji PWA
 - 30.12.2025 - Przerwano nieskończoną pętlę aktualizacji PWA z fallbackiem hard refresh
 - 30.12.2025 - Dodano fallback reload dla mechanizmu aktualizacji PWA
@@ -116,9 +125,9 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 29.12.2025 - Dodano wake lock i ulepszenia z przeglądu kodu
 - 29.12.2025 - Dodano rotację mapy heading-up z przyciskiem kompasu
 - 29.12.2025 - Ulepszono obsługę uprawnień GPS dla iOS Safari PWA
-- 29.12.2025 - Dodano ADR-047 dla obsługi wygaśnięcia uprawnień GPS w iOS PWA
 - 29.12.2025 - Ulepszono wiadomości strony offline dla lepszego UX
 - 29.12.2025 - Scalono oczyszczanie i usuwanie rozwlekłych komentarzy
+- 29.12.2025 - Usunięto rozwlekłe komentarze w stylu AI z kodu produkcyjnego
 - 28.12.2025 - Zoptymalizowano wyszukiwanie cache w navigation handler
 - 28.12.2025 - Zagwarantowano niestandardową stronę offline zamiast błędu Safari
 - 28.12.2025 - Użyto wzorca fire-and-forget dla cache.put w navigation handler
@@ -227,7 +236,7 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 21.12.2025 - Dodano ikonę artykułu/kategorii do navbaru w widokach zagnieżdżonych
 - 20.12.2025 - Dodano instrukcje uprawnień GPS specyficzne dla platformy
 - 20.12.2025 - Zredukowano szerokość kontenera desktop do 800px i ukryto przycisk kompasu
-- 20.12.2025 - Dodano favicon.ico dla wyników wyszukiwania Google + ADR-045
+- 20.12.2025 - Dodano favicon.ico dla wyników wyszukiwania Google
 - 20.12.2025 - Zachowano stary cache gdy serwer zwraca błędy (403, 500)
 - 20.12.2025 - Dodano splash screeny iOS, Navigation Preload i poprawione fallbacki offline
 - 20.12.2025 - Zapobiegano agresywnemu czyszczeniu cache które psuje tryb offline
@@ -247,10 +256,8 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 19.12.2025 - Zmieniono terminologię MTU na PS (Punkty Schronienia)
 - 18.12.2025 - Dodano auto bump wersji przy commicie
 - 18.12.2025 - Krytyczne poprawki bezpieczeństwa i stabilności
-- 18.12.2025 - Kompleksowy raport przeglądu kodu 2025-12-18
 - 18.12.2025 - Wyeksportowano helpery i typy wyszukiwania adresu
 - 17.12.2025 - Poprawiono UX z przeglądu kodu dla wyszukiwania adresu
-- 17.12.2025 - Dodano ADR-043 dla ulepszeń UX wyszukiwania adresu
 - 17.12.2025 - Ulepszenia UX średniego wysiłku (sekcja 4.2)
 - 17.12.2025 - Dodano nawigację klawiaturową dla wyszukiwania adresu (Quick Win 3)
 - 17.12.2025 - Dodano ostatnie destynacje nawigacji (Quick Win 2)
@@ -304,19 +311,16 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 05.12.2025 - Migrowano pozostałe użycia Z_INDEX do zmiennych CSS
 - 05.12.2025 - Zaimplementowano architekturę CSS Grid Shell dla mobile layout
 - 05.12.2025 - Naprawiono problemy mobile layout - z-index, viewport height, positioning tabbaru
-- 05.12.2025 - Zaktualizowano dokumentację z architekturą Konsta UI
 - 05.12.2025 - Poprawki przeglądu kodu dla implementacji Konsta UI
 - 05.12.2025 - Zaimplementowano Konsta UI dla mobile-first native look
-- 05.12.2025 - Dodano plan integracji Konsta UI i dokumentację
 - 05.12.2025 - Naprawiono nakładanie się Leaflet attribution na dolną nawigację
 - 05.12.2025 - Ulepszono mobile UX: przycisk zamknięcia popup i pozycjonowanie legendy
-- 05.12.2025 - Dodano ADR-003 dla funkcji wyboru aplikacji nawigacji iOS
 - 05.12.2025 - Dodano dialog wyboru aplikacji nawigacji dla użytkowników iOS
 - 05.12.2025 - Zaimplementowano ulepszenia RMD i UX/UI według przeglądu kodu
-- 05.12.2025 - Dodano kompleksowy raport przeglądu kodu RMD i UX/UI
 - 02.12.2025 - Ulepszono funkcjonalność offline przez cachowanie danych schronisk i aktualizację UI
 
 ### 🐛 Poprawki błędów
+- 29.12.2025 - Usunięto rozwlekłe komentarze z komponentów GPS i mapy
 - 29.12.2025 - Poprawiono obsługę GPS iOS według przeglądu kodu
 - 29.12.2025 - Ulepszono UX strony offline według przeglądu kodu
 - 28.12.2025 - Usunięto redundantną funkcję findCachedAppShell
@@ -338,22 +342,6 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 11.12.2025 - Naprawiono rendering zakładek w trybie offline
 - 05.12.2025 - Naprawiono błędy w obsłudze offline i pobieraniu schronisk
 
-### 📝 Dokumentacja
-- 31.12.2025 - Zaktualizowano datę lastmod w sitemap
-- 30.12.2025 - Zaktualizowano datę lastmod w sitemap.xml
-- 28.12.2025 - Zaktualizowano datę lastmod sitemap
-- 27.12.2025 - Zaktualizowano dokumentację dla auto-centrowania GPS
-- 25.12.2025 - Zaktualizowano ADR: poprawiono dokumentację priorytetu CDN-Cache-Control
-- 24.12.2025 - Zaktualizowano datę lastmod sitemap.xml
-- 21.12.2025 - Zaktualizowano datę lastmod sitemap
-- 21.12.2025 - Dodano przewodnik aktualizacji CMS dla treści poradników
-- 21.12.2025 - Zaktualizowano kolejność kategorii i ścieżki obrazów
-- 21.12.2025 - Nawigowano do przewodnika instalacji z ustawień i promptu PWA
-- 21.12.2025 - Wyrównano tytuł widoku zagnieżdżonego do lewej
-- 20.12.2025 - Dodano ustawienia lokalne i assety screenshotów
-- 15.12.2025 - Przygotowanie do implementacji poradniki CMS
-- 05.12.2025 - Dodano dokumentację
-- 02.12.2025 - Zaktualizowano
 
 ### ⚡ Wydajność
 - 30.12.2025 - Zapisywano zoom tylko gdy faktycznie się zmienia
@@ -373,6 +361,7 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 - 05.12.2025 - Migrowano stare wartości Z_INDEX do zmiennych CSS
 
 ### 🔧 Konfiguracja
+- 21.12.2025 - Dodano uprawnienie "gh pr create" do Claude Code
 - 20.12.2025 - Zmieniono grubość zarysu markera 24h (thicker 2px, potem green)
 - 05.12.2025 - Dodano Konsta UI do projektu
 
@@ -412,7 +401,6 @@ _(Brak commitów w listopadzie)_
 - 27.10.2025 - Dodano możliwość wyświetlania trasy na mapie po kliknięciu markera schroniska
 - 27.10.2025 - Dodano sposób bezpiecznego logowania użytkowników
 - 27.10.2025 - Dodano początkowe assety dla aplikacji webowej shelter finder
-- 27.10.2025 - Zaktualizowano istniejącą dokumentację według obecnych standardów projektu
 - 27.10.2025 - Dodano opcję dodawania skrótu aplikacji do pulpitu telefonu lub komputera
 - 27.10.2025 - Dodano funkcjonalność instalacji aplikacji na ekranie głównym
 - 27.10.2025 - Ustawiono nazwę i ikonę aplikacji dla lepszego brandingu
@@ -462,7 +450,6 @@ _(Brak commitów w listopadzie)_
 - 26.10.2025 - Dodano możliwość wyświetlania tras pieszych do schronisk na mapie
 - 26.10.2025 - Dodano możliwość wyszukiwania konkretnych adresów używając integracji mapy
 - 26.10.2025 - Dodano możliwości filtrowania schronisk w aplikacji
-- 26.10.2025 - Dodano opis aplikacji MTU Shelter Finder i jej architektury
 - 26.10.2025 - Dodano podstawowe komponenty i strukturę layoutu dla aplikacji shelter finder
 - 26.10.2025 - Commit początkowy
 
@@ -471,9 +458,6 @@ _(Brak commitów w listopadzie)_
 - 28.10.2025 - Naprawiono problemy z renderowaniem mapy i początkową lokalizacją
 - 27.10.2025 - Ulepszono obsługę lokalizacji i ładowanie mapy na mobile
 - 27.10.2025 - Usunięto skróty ulic z wyszukiwania adresu w polskim
-
-### 📝 Dokumentacja
-- 29.10.2025 - Zaktualizowano dokumentację MTU testing
 
 ### 🚀 Publikacja
 - Regularne publikacje aplikacji (łącznie ~10 publikacji w październiku 2025)
