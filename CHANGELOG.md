@@ -2,23 +2,49 @@
 
 Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 
-**Aktualna wersja:** 1.3.48
+**Aktualna wersja:** 1.3.61
 
 ---
 
 ## Styczeń 2026
+
+### ✨ Nowe funkcje
+- 29.01.2026 - Dodano dynamiczne pobieranie liczby punktów schronienia z API - liczba aktualizuje się automatycznie zamiast hardcoded wartości
+- 29.01.2026 - Dodano skrypty synchronizacji baz danych DEV ↔ PROD (scripts/sync-databases.ts, scripts/compare-databases.ts)
+- 29.01.2026 - Zsynchronizowano 75,414 punktów schronienia między bazami DEV i PROD
+- 29.01.2026 - Dodano synchronizację danych ESA NASK (1,761 sensorów) i GIOŚ (pomiary jakości powietrza)
+
+### 🐛 Naprawy błędów
+- 29.01.2026 - Naprawiono problem z deploymentem Drizzle - wykluczono tabele PostGIS (spatial_ref_sys) z migracji
+- 29.01.2026 - Naprawiono wyświetlanie starej wersji aplikacji (1.3.18 → 1.3.61) - problem z cache Service Worker
+
+### 🔧 Konfiguracja
+- 29.01.2026 - Dodano explicit tablesFilter w drizzle.config.ts - tylko zarządzane tabele, bez systemowych PostGIS
+- 29.01.2026 - Utworzono brakujące indeksy na PROD (prg_boundaries_wkb_geometry_geom_idx, weather_history_location_time_idx)
 
 ### 🔒 Bezpieczeństwo
 - 14.01.2026 - Dodano rate limiting dla admin endpoints (max 5 req/min) - ochrona przed atakami brute-force
 - 14.01.2026 - Poprawiono type safety w sync-weather.ts - zastąpiono Promise<any> przez Promise<unknown>
 
 ### 🐛 Naprawy błędów
+- 14.01.2026 - Naprawiono agresywne przeładowanie PWA przy każdym otwarciu z ikony home screen - aplikacja nie wymusza już reload co 2-5 minut
+- 14.01.2026 - Naprawiono utratę kontekstu nawigacji po reload - przywracanie zakładki, schronienia, trasy i filtrów z sessionStorage
+- 14.01.2026 - Usunięto automatyczne skipWaiting() w Service Worker - zapobiega niespodziewanym reloadom podczas użytkowania aplikacji
 - 14.01.2026 - Naprawiono type casting w monitoringu pogody - dodano timestamp do WeatherMetrics interface
 - 14.01.2026 - Dodano TTL (7 dni) dla emergency cache schronisk - zapobiega pokazywaniu stale danych po długim czasie
 - 14.01.2026 - Poprawiono error handling w useWakeLock - dodano identyfikację błędów DOMException
 - 14.01.2026 - Usunięto TODO comment bez ticket reference z transformers.ts
 
 ### ✨ Nowe funkcje
+- 14.01.2026 - Dodano persystencję stanu nawigacji (sessionStorage) - przywracanie zakładki, schronienia, trasy, filtrów po reload aplikacji
+- 14.01.2026 - Dodano persystencję pozycji mapy (center + zoom) - mapa wraca do ostatniego widoku użytkownika po reload aplikacji
+- 14.01.2026 - Dodano automatyczne zapisywanie pozycji mapy przy każdym przesunięciu/zoomie - real-time synchronizacja z sessionStorage
+- 14.01.2026 - Dodano user-controlled aktualizacje PWA - użytkownik decyduje kiedy zaktualizować aplikację (banner z przyciskiem "Aktualizuj")
+- 14.01.2026 - Dodano automatyczne zapisywanie kontekstu nawigacji przy każdej zmianie stanu (active tab, selected shelter, route, filters)
+- 14.01.2026 - Dodano przywracanie wybranego schronienia z IndexedDB cache lub API po reload strony
+- 14.01.2026 - Dodano 5-minutowy expiry dla stanu sesji - zapobiega przywracaniu stałych danych po długim czasie
+- 14.01.2026 - Dodano graceful degradation dla sessionStorage - aplikacja działa nawet gdy storage nie jest dostępny (iOS private mode)
+- 14.01.2026 - Dodano nową kategorię guides "Aplikacja GdzieSieUkryc.pl" z FAQ, instrukcjami obsługi mapy i pełnym opisem funkcji aplikacji
 - 14.01.2026 - Zwiększono częstotliwość synchronizacji schronisk (codziennie zamiast co tydzień) - nowsze dane będą widoczne następnego dnia
 - 14.01.2026 - Dodano automatyczne odświeżanie cache pogody (co 15 minut dla 20 głównych miast Polski)
 - 14.01.2026 - Dodano endpoint monitoringu aplikacji (GET /api/health) sprawdzający status bazy danych, Redis, pamięci i uptime
@@ -67,6 +93,8 @@ Aplikacja PWA do lokalizacji Punktów Schronienia w Polsce.
 
 
 ### ⚡ Wydajność
+- 14.01.2026 - Wyeliminowano niepotrzebne przeładowania PWA - częstotliwość sprawdzania aktualizacji zmieniona z 2 min → 15 min (redukcja o 90%)
+- 14.01.2026 - Usunięto trigger aktualizacji przy zmianie widoczności aplikacji - zapobiega reload gdy użytkownik wraca do app
 - 14.01.2026 - Zoptymalizowano zużycie baterii GPS (adaptive accuracy: niska dokładność podczas chodzenia <1m/s, wysoka podczas jazdy >5m/s)
 - 14.01.2026 - Ulepszono wydajność pobierania danych pogodowych (cache warming w tle dla głównych miast)
 - 13.01.2026 - Zapobiegano niepotrzebnemu przeładowaniu schronisk przy przesuwaniu pinezki lokalizacji
@@ -464,9 +492,9 @@ _(Brak commitów w listopadzie)_
 
 ---
 
-**Ostatnia aktualizacja:** 13.01.2026
+**Ostatnia aktualizacja:** 29.01.2026
 
-**Łączna liczba zmian:** 876 commitów
+**Łączna liczba zmian:** 890+ commitów
 
 ---
 
